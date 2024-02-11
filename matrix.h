@@ -15,8 +15,8 @@ typedef struct LineMonad {
 } EitherLine;
 
 typedef struct Matrix {
-    int len;
-    EitherLine *lines;
+    size_t len;
+    Line *lines;
 } Matrix;
 
 typedef struct MatrixMonad {
@@ -29,12 +29,12 @@ EitherMatr return_matrix_error(char *e);
 EitherLine return_line(Line l);
 EitherLine return_line_error(char *e);
 EitherMatr bind_matrix(EitherMatr (*func)(Matrix), EitherMatr m);
-EitherMatr print_matrix(EitherMatr m);
-EitherLine bind_line(EitherLine (*func)(Line), EitherMatr l);
-EitherLine print_line(EitherLine l);
-EitherMatr get_matrix();
-Line get_line();
-void print_matrix(Matrix m);
-void print_line(Line l);
+void print_matrix(EitherMatr m);
+EitherLine bind_line(EitherLine (*func)(Line), EitherLine l);
+void print_line(EitherLine l);
+EitherLine get_line(size_t len);
+EitherMatr get_matrix(size_t m_len);
+size_t get_size();
+int get_int();
 
 #endif

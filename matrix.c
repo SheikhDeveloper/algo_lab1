@@ -3,7 +3,7 @@
 EitherMatr return_matrix(Matrix m) {return (EitherMatr) { .matrix = m, .error = NULL }; }
 EitherMatr return_matrix_error(char *e) {return (EitherMatr) { .matrix = (Matrix) { .len = 0, .lines = NULL},  .error = e }; }
 EitherLine return_line(Line l) {return (EitherLine) { .line = l, .error = NULL}; }
-EitherLine return_line_error(char *e) {return (EitherLine) { .line = (Line) { .len = 0, .line = NULL}, .error = e }; }
+EitherLine return_line_error(char *e) {return (EitherLine) { .line = (Line) { .len = 0, .arr = NULL}, .error = e }; }
 EitherMatr bind_matrix(EitherMatr (*func)(Matrix), EitherMatr m) {
     return (m.error != NULL) ? m : func(m.matrix); 
 }
@@ -13,7 +13,7 @@ void print_matrix(EitherMatr m) {
         Matrix matr = m.matrix;
         EitherLine l;
         for (size_t i = 0; i < matr.len; i++) {
-            l = *(matr.lines + i);
+            l.line = *(matr.lines + i);
             print_line(l);
             printf("\n");
         }
@@ -33,25 +33,25 @@ void print_line(EitherLine l) {
     }
 }
 
-EitherMatr *get_matrix(size_t m_len) {
+EitherMatr get_matrix(size_t m_len) {
     EitherMatr m;
     Matrix matr;
     Line *tmp;
     matr.len = m_len;
     matr.lines = NULL;
-    int scanned = 0;
-    Line l;
+    EitherLine l;
     size_t line_len;
-    for (size_t i = 0; i < m; i++) {
+    for (size_t i = 0; i < matr.len; i++) {
         printf("Input length of the line in the matrix: ");
-        line_len = get_size()
-        l = get_line();
+        line_len = get_size();
+        l = get_line(line_len);
         tmp = realloc(matr.lines, matr.len * sizeof(EitherLine));
-        if (tmp == NULL) { 
+        if (tmp == NULL || l.error != NULL) {
+            if (l.error != NULL && tmp != NULL) free(tmp);
             m = return_matrix_error(errors[0]);
             return m;
          }
-        *(matr.lines + i) = l;
+        *(matr.lines + i) = l.line;
     }
     m = return_matrix(matr); 
     return m;
@@ -60,15 +60,20 @@ EitherMatr *get_matrix(size_t m_len) {
 EitherLine get_line(size_t len) {
     EitherLine line;
     Line l; 
+    l.len = len;
     int *tmp;
+    tmp = realloc(l.arr, l.len * sizeof(int));
+    if (tmp == NULL) {
+        line = return_line_error(errors[0]);
+        return line;
+    }
     int num;
     for (size_t i = 0; i < len; i++) {
         num = get_int();
-        l.len += 1;
-        tmp = realloc(l.arr, l.len * sizeof(int));
-        if (tmp == NULL) {
-            line = return_line_error(errors[0]);
-        }
+        *(l.arr + i) = num;
+    }
+    line = return_line(l);
+    return line;
 }
 
 int get_int() {
@@ -76,8 +81,8 @@ int get_int() {
     int scanned = scanf("%d", &num);
     while (scanned != 1) {
         if (scanned == EOF) return EOF;
-        fprintf(stderr, "%s", errors[1]);
         scanf("%*[^\n]");
+        fprintf(stderr, "%s", errors[1]);
         scanned = scanf("%d", &num);
     }
     return num;

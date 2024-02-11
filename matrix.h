@@ -6,20 +6,20 @@ typedef struct Line {
     int *arr;
 } Line;
 
+typedef struct LineMonad {
+    Line line;
+    char *error;
+} EitherLine;
+
 typedef struct Matrix {
     int len;
-    Line *lines;
+    EitherLine *lines;
 } Matrix;
 
 typedef struct MatrixMonad {
-    Matrix matr;
+    Matrix matrix;
     char *error;
 } EitherMatr;
-
-typedef struct LineMonad {
-    Line l;
-    char *error;
-} EitherLine;
 
 EitherMatr return_matrix(Matrix m);
 EitherMatr return_matrix_error(char *e);

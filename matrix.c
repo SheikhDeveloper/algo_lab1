@@ -8,7 +8,7 @@ EitherMatr bind_matrix(EitherMatr (*func)(Matrix), EitherMatr m) {
     return (m.error != NULL) ? m : func(m.matrix); 
 }
 void print_matrix(EitherMatr m) {
-    if (m.error != NULL) printf("%s", m.error);
+    if (m.error != NULL) fprintf(stderr, "%s", m.error);
     else {
         Matrix matr = m.matrix;
         EitherLine l;
@@ -43,12 +43,12 @@ EitherMatr *get_matrix(size_t m_len) {
     Line l;
     size_t line_len;
     for (size_t i = 0; i < m; i++) {
-        printf("Введите длину строки матрицы: ");
+        printf("Input length of the line in the matrix: ");
         line_len = get_size()
         l = get_line();
         tmp = realloc(matr.lines, matr.len * sizeof(EitherLine));
         if (tmp == NULL) { 
-            m = return_matrix_error("Memory allocation failed.\nKilling the program...\n");
+            m = return_matrix_error(errors[0]);
             return m;
          }
         *(matr.lines + i) = l;
@@ -60,16 +60,35 @@ EitherMatr *get_matrix(size_t m_len) {
 EitherLine get_line(size_t len) {
     EitherLine line;
     Line l; 
+    int *tmp;
     int num;
-    int scanned = get_int(&n);
-    while (scanned != 
+    for (size_t i = 0; i < len; i++) {
+        num = get_int();
+        l.len += 1;
+        tmp = realloc(l.arr, l.len * sizeof(int));
+        if (tmp == NULL) {
+            line = return_line_error(errors[0]);
+        }
 }
 
-get_int(int *num) {
-    int scanned = scanf("%d", num);
+int get_int() {
+    int num;
+    int scanned = scanf("%d", &num);
     while (scanned != 1) {
         if (scanned == EOF) return EOF;
+        fprintf(stderr, "%s", errors[1]);
         scanf("%*[^\n]");
-        scanned = scanf("%d", num);
+        scanned = scanf("%d", &num);
     }
+    return num;
+}
+
+size_t get_size() {
+    int len = get_int();
+    while (len < 0) {
+        fprintf(stderr, "%s", errors[2]);
+        len = get_int();
+    }
+    size_t result = (size_t) len;
+    return result;
 }

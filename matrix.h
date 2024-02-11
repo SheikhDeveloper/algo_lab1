@@ -1,5 +1,8 @@
+#ifndef MATRIX_H
+#define MATRIX_H
 #include <stdio.h>
 #include <stdlib.h>
+#include "errors.h"
 
 typedef struct Line {
     size_t len;
@@ -33,3 +36,5 @@ EitherMatr get_matrix();
 Line get_line();
 void print_matrix(Matrix m);
 void print_line(Line l);
+
+#endif

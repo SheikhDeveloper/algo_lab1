@@ -1,4 +1,5 @@
 #include "matrix.h"
+#include "errors.h"
 
 EitherMatr return_matrix(Matrix m) {return (EitherMatr) { .matrix = m, .error = NULL }; }
 EitherMatr return_matrix_error(char *e) {return (EitherMatr) { .matrix = (Matrix) { .len = 0, .lines = NULL},  .error = e }; }
@@ -13,23 +14,17 @@ void print_matrix(EitherMatr m) {
         Matrix matr = m.matrix;
         EitherLine l;
         for (size_t i = 0; i < matr.len; i++) {
-            l.line = *(matr.lines + i);
+            l = return_line(*(matr.lines + i));
             print_line(l);
             printf("\n");
         }
     }
 }
-EitherLine bind_line(EitherLine (*func)(Line), EitherLine l) {
-    return (l.error != NULL) ? l : func(l.line);
-}
 
 void print_line(EitherLine l) {
-    if (l.error != NULL) printf("%s", l.error);
-    else  {
-        Line line = l.line;
-        for (size_t i = 0; i < line.len; i++) {
-            printf("%d ", *(line.arr + i));
-        }
+    Line line = l.line;
+    for (size_t i = 0; i < line.len; i++) {
+        printf("%d ", *(line.arr + i));
     }
 }
 
@@ -96,4 +91,15 @@ size_t get_size() {
     }
     size_t result = (size_t) len;
     return result;
+}
+
+void free_matrix(Matrix m) {
+    for (size_t i = 0; i < m.len; i++) {
+        free_line(*(m.lines + i));
+    }
+    free(m.lines);
+}
+
+void free_line(Line l) {
+    free(l.arr);
 }

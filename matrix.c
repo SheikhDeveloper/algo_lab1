@@ -43,6 +43,7 @@ Matrix *get_matrix(size_t m_len) {
             printf("\n");
             return matr;
         }
+        printf("Input the line: ");
         l = get_line(line_len);
         if (l == NULL) {
             free_matrix(matr); 

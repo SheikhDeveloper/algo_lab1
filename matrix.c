@@ -1,6 +1,6 @@
 #include "matrix.h"
 
-void print_matrix(Matrix matr) {
+void print_matrix(const Matrix matr) {
     Line l;
     for (size_t i = 0; i < matr.len; i++) {
         l = *(matr.lines + i);
@@ -9,7 +9,7 @@ void print_matrix(Matrix matr) {
     }
 }
 
-void print_line(Line line) {
+void print_line(const Line line) {
     for (size_t i = 0; i < line.len; i++) {
         printf("%d ", *(line.arr + i));
     }

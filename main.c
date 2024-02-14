@@ -101,7 +101,7 @@ void merge(Line *l, int left, int middle, int right) {
     k = left;
     while (i < left_len && j < right_len) {
         if (*(left_arr + i) <= *(right_arr + j)) {
-            *(l->arr + k) = *(left_arr + j);
+            *(l->arr + k) = *(left_arr + i);
             i += 1;
         }
         else {

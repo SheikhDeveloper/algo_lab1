@@ -7,7 +7,7 @@ STATIC = --analyze -Xanalyzer -analyzer-output=html
  
 CC = clang
 
-lab1: line.o matrix.o main.o
+lab1: line.o matrix.o main.o merge_sort.o
 	${CC} ${ASAN} *.o -o $@
 
 input_tools.o: lib/input_tools.h lib/input_tools.c
@@ -18,6 +18,9 @@ line.o: lib/line.c lib/line.h
 
 matrix.o: lib/matrix.c lib/matrix.h 
 	${CC} ${CFLAGS} ${ASAN} -c lib/matrix.c -o $@
+
+merge_sort.o: lib/merge_sort.c lib/merge_sort.h
+	${CC} ${CFLAGS} ${ASAN} -c lib/merge_sort.c -o $@
 
 main.o : main.c 
 	${CC} ${CFLAGS} ${ASAN} -c main.c -o $@

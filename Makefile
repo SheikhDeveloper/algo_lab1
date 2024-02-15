@@ -28,7 +28,7 @@ main.o : main.c
 debug: $(SRCS) $(HEADERS) 
 	${CC} ${CFLAGS} -c lib/line.c -o line.o
 	${CC} ${CFLAGS} -c lib/matrix.c -o matrix.o
-	${CC} ${CFLAGS} ${ASAN} -c lib/merge_sort.c -o $@
+	${CC} ${CFLAGS} -c lib/merge_sort.c -o merge_sort.o
 	${CC} ${CFLAGS} -c main.c -o main.o
 	${CC} *.o -o $@
 

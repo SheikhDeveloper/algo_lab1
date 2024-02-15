@@ -24,7 +24,7 @@ Line *get_line(size_t len) {
             tmp = realloc(l->arr, l->len * sizeof(int));
             if (tmp == NULL && l->len != 0) {
                 free(l);
-                return l;
+                return NULL;
             }
             l->arr = tmp;
             break;

@@ -35,7 +35,9 @@ debug: $(SRCS) $(HEADERS)
 .PHONY : lab1 clean static debug
 
 static:
-	${CC} lib/lists.c ${STATIC} -o lists
+	${CC} lib/line.c ${STATIC} -o line
+	${CC} lib/matrix.c ${STATIC} -o matrix
+	${CC} lib/merge_sort.c ${STATIC} -o merge_sort
 	${CC} main.c ${STATIC} -o main
 
 clean: 

@@ -52,6 +52,7 @@ Matrix *get_matrix(size_t m_len) {
 }
 
 void free_matrix(Matrix *m) {
+    if (m == NULL) return;
     for (size_t i = 0; i < m->len; i++) {
         free_line(*(m->lines + i));
     }

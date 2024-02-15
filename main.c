@@ -1,9 +1,10 @@
 #include <stdlib.h>
 #include <stdio.h>
-#include "matrix.h"
+#include "lib/matrix.h"
 #include "states.h"
+#include "lib/input_tools.h"
 
-Matrix *find_max_line_and_sort(Matrix *m);
+Matrix *find_max_line_and_sort(const Matrix *m);
 int sum(Line l);
 void merge_sort(Line *l, int left, int right);
 void merge(Line *l, int left, int middle, int right);
@@ -41,7 +42,7 @@ int main() {
     return 0;
 }
 
-Matrix *find_max_line_and_sort(Matrix *m) {
+Matrix *find_max_line_and_sort(const Matrix *m) {
     Matrix *result = (Matrix *)malloc(sizeof(Matrix));
     result->len = 0;
     if (m->len == 0) {
@@ -84,42 +85,42 @@ void merge_sort(Line *l, int left, int right) {
 }
 
 void merge(Line *l, int left, int middle, int right) {
-    int i,j,k;
+    int left_index, right_index, index;
     int left_len = middle - left + 1;
     int right_len = right - middle;
 
     int right_arr[right_len], left_arr[left_len];
-    for (i = 0; i < left_len; i++) {
-        *(left_arr + i) = *(l->arr + left + i);
+    for (left_index = 0; left_index < left_len; left_index++) {
+        *(left_arr + left_index) = *(l->arr + left + left_index);
     }
-    for (j = 0; j < right_len; j++) {
-        *(right_arr + j) = *(l->arr + middle + 1 + j);
+    for (right_index = 0; right_index < right_len; right_index++) {
+        *(right_arr + right_index) = *(l->arr + middle + 1 + right_index);
     }
 
-    i = 0;
-    j = 0;
-    k = left;
-    while (i < left_len && j < right_len) {
-        if (*(left_arr + i) <= *(right_arr + j)) {
-            *(l->arr + k) = *(left_arr + i);
-            i += 1;
+    left_index = 0;
+    right_index = 0;
+    index = left;
+    while (left_index < left_len && right_index < right_len) {
+        if (*(left_arr + left_index) <= *(right_arr + right_index)) {
+            *(l->arr + index) = *(left_arr + left_index);
+            left_index += 1;
         }
         else {
-            *(l->arr + k) = *(right_arr + j);
-            j += 1;
+            *(l->arr + index) = *(right_arr + right_index);
+            right_index += 1;
         }
-        k += 1;
+        index += 1;
     }
 
-    while (i < left_len) {
-        *(l->arr + k) = *(left_arr + i);
-        i += 1;
-        k += 1;
+    while (left_index < left_len) {
+        *(l->arr + index) = *(left_arr + left_index);
+        left_index += 1;
+        index += 1;
     }
 
-    while (j < right_len) {
-        *(l->arr + k) = *(right_arr + j);
-        j += 1;
-        k += 1;
+    while (right_index < right_len) {
+        *(l->arr + index) = *(right_arr + right_index);
+        right_index += 1;
+        index += 1;
     }
 }

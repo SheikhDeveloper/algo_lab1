@@ -43,3 +43,11 @@ void print_line(const Line line) {
 void free_line(Line l) {
     free(l.arr);
 }
+
+int sum(Line l) {
+    int result = 0;
+    for (size_t i = 0; i < l.len; i++) {
+        result += *(l.arr + i); 
+    }
+    return result;
+}

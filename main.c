@@ -63,11 +63,3 @@ Matrix *find_max_line_and_sort(const Matrix *m) {
     *(result->lines) = maxima;
     return result;
 }
-
-int sum(Line l) {
-    int result = 0;
-    for (size_t i = 0; i < l.len; i++) {
-        result += *(l.arr + i); 
-    }
-    return result;
-}

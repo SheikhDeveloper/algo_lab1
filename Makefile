@@ -2,12 +2,12 @@ CFLAGS = -Wall -Wextra -Werror -g
 ASAN = -fsanitize=address,undefined
 EXEC = lab1 debug
 SRCS = $(shell find . -type f -name '*.c' -print)
-HEADERS = $(shell find . -type f -name '*.h' -print)
+HEADERS = $(shell find . -name 'lib' -type d -prune -o -type f -name '*.h' -print)
 STATIC = --analyze -Xanalyzer -analyzer-output=html
  
 CC = clang
 
-lab1: line.o matrix.o main.o merge_sort.o
+lab1: line.o matrix.o merge_sort.o main.o 
 	${CC} ${ASAN} *.o -o $@
 
 input_tools.o: lib/input_tools.h lib/input_tools.c
@@ -28,6 +28,7 @@ main.o : main.c
 debug: $(SRCS) $(HEADERS) 
 	${CC} ${CFLAGS} -c lib/line.c -o line.o
 	${CC} ${CFLAGS} -c lib/matrix.c -o matrix.o
+	${CC} ${CFLAGS} ${ASAN} -c lib/merge_sort.c -o $@
 	${CC} ${CFLAGS} -c main.c -o main.o
 	${CC} *.o -o $@
 

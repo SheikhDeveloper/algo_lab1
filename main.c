@@ -6,7 +6,6 @@
 #include "lib/merge_sort.h"
 
 Matrix *find_max_line_and_sort(const Matrix *m);
-int sum(Line l);
 
 int main() {
     size_t m_len;

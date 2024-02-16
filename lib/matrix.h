@@ -8,7 +8,8 @@ typedef struct Matrix {
     Line *lines;
 } Matrix;
 
-void print_matrix(Matrix m);
+Matrix *matrix_init(size_t len);
+void print_matrix(const Matrix m);
 Matrix *get_matrix(size_t m_len);
 void free_matrix(Matrix *m);
 

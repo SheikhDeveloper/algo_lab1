@@ -5,7 +5,7 @@
 #include "lib/input_tools.h"
 #include "lib/merge_sort.h"
 
-Matrix *find_max_line_and_sort(const Matrix *m);
+Line *find_max_line_and_sort(const Matrix *m);
 
 int main() {
     size_t m_len;
@@ -28,24 +28,18 @@ int main() {
     }
     printf("Initial matrix:\n");
     print_matrix(*m);
-    Matrix *result = find_max_line_and_sort(m);
+    Line *result = find_max_line_and_sort(m);
     printf("Resulting vector:\n");
-    print_matrix(*result);
+    print_line(*result);
     free_matrix(m);
-    if (result->len != 0) {
-        free(result->lines);
-    }
+    free_line(*result);
     free(result);
     printf("%s", states[0]);
     return 0;
 }
 
-Matrix *find_max_line_and_sort(const Matrix *m) {
-    Matrix *result = (Matrix *)malloc(sizeof(Matrix));
-    result->len = 0;
-    if (m->len == 0) {
-        return result;
-    }
+Line *find_max_line_and_sort(const Matrix *m) {
+    Line *result = (Line *)malloc(sizeof(Line)); 
     Line maxima = *(m->lines);
     int max_sum = sum(*(m->lines));
     int cur_sum;
@@ -57,8 +51,6 @@ Matrix *find_max_line_and_sort(const Matrix *m) {
         }
     }
     maxima.arr = merge_sort(maxima.arr, 0, maxima.len - 1);
-    result->len = 1;
-    result->lines = (Line *)malloc(sizeof(Line));
-    *(result->lines) = maxima;
+    *result = copy_line(maxima);
     return result;
 }

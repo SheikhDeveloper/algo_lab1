@@ -12,10 +12,10 @@ void print_matrix(const Matrix matr) {
     }
 }
 
-Matrix *get_matrix(size_t m_len) {
+Matrix *matrix_init(size_t len) {
     Matrix *matr = (Matrix *)malloc(sizeof(Matrix));
     void *tmp;
-    matr->len = m_len;
+    matr->len = len;
     matr->lines = NULL;
     tmp = realloc(matr->lines, matr->len * sizeof(Line));
     if (tmp == NULL) {
@@ -23,9 +23,16 @@ Matrix *get_matrix(size_t m_len) {
         return NULL;
     }
     matr->lines = tmp;
+    return matr;
+}
+
+Matrix *get_matrix(size_t m_len) {
+    Matrix *matr = matrix_init(m_len);
+    if (matr == NULL) return NULL;
     Line *l;
     size_t line_len;
     int scanned;
+    void *tmp;
     for (size_t i = 0; i < matr->len; i++) {
         printf("Input length of the line in the matrix: ");
         scanned = get_size(&line_len);

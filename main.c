@@ -28,12 +28,17 @@ int main() {
     }
     printf("Initial matrix:\n");
     print_matrix(*m);
-    Line *result = find_max_line_and_sort(m);
+    Line *result = NULL;
+    if (m->len != 0) {
+        result = find_max_line_and_sort(m);
+    }
     printf("Resulting vector:\n");
-    print_line(*result);
     free_matrix(m);
-    free_line(*result);
-    free(result);
+    if (result != NULL) {
+        print_line(*result);
+        free_line(*result);
+        free(result);
+    }
     printf("%s", states[0]);
     return 0;
 }

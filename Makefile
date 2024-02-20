@@ -25,14 +25,7 @@ merge_sort.o: lib/merge_sort.c lib/merge_sort.h
 main.o : main.c 
 	${CC} ${CFLAGS} ${ASAN} -c main.c -o $@
 
-debug: $(SRCS) $(HEADERS) 
-	${CC} ${CFLAGS} -c lib/line.c -o line.o
-	${CC} ${CFLAGS} -c lib/matrix.c -o matrix.o
-	${CC} ${CFLAGS} -c lib/merge_sort.c -o merge_sort.o
-	${CC} ${CFLAGS} -c main.c -o main.o
-	${CC} *.o -o $@
-
-.PHONY : lab1 clean static debug
+.PHONY : lab1 clean static 
 
 static:
 	${CC} lib/line.c ${STATIC} -o line

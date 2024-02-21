@@ -12,5 +12,6 @@ Matrix *matrix_init(size_t len);
 void print_matrix(const Matrix m);
 Matrix *get_matrix(size_t m_len);
 void free_matrix(Matrix *m);
+Line *find_max_line(const Matrix *m);
 
 #endif

@@ -1,6 +1,6 @@
 CFLAGS = -Wall -Wextra -Werror -g 
 ASAN = -fsanitize=address,undefined
-EXEC = lab1 debug
+EXEC = lab1
 SRCS = $(shell find . -type f -name '*.c' -print)
 HEADERS = $(shell find . -name 'lib' -type d -prune -o -type f -name '*.h' -print)
 STATIC = --analyze -Xanalyzer -analyzer-output=html

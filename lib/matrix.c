@@ -66,3 +66,19 @@ void free_matrix(Matrix *m) {
     free(m->lines);
     free(m);
 }
+
+Line *find_max_line(const Matrix *m) {
+    Line *result = (Line *)malloc(sizeof(Line));
+    Line maxima = *(m->lines);
+    int max_sum = sum(*(m->lines));
+    int cur_sum;
+    for (size_t i = 0; i < m->len; i++) {
+        cur_sum = sum(*(m->lines + i));
+        if (max_sum < cur_sum) {
+            maxima = *(m->lines + i);
+            max_sum = cur_sum;
+        }
+    }
+    *result = copy_line(maxima);
+    return result;
+}

@@ -44,18 +44,7 @@ int main() {
 }
 
 Line *find_max_line_and_sort(const Matrix *m) {
-    Line *result = (Line *)malloc(sizeof(Line)); 
-    Line maxima = *(m->lines);
-    int max_sum = sum(*(m->lines));
-    int cur_sum;
-    for (size_t i = 0; i < m->len; i++) {
-        cur_sum = sum(*(m->lines + i));
-        if (max_sum < cur_sum) {
-            maxima = *(m->lines + i);
-            max_sum = cur_sum;
-        }
-    }
-    maxima.arr = merge_sort(maxima.arr, 0, maxima.len - 1);
-    *result = copy_line(maxima);
-    return result;
+    Line *maxima = find_max_line(m);
+    maxima->arr = merge_sort(maxima->arr, 0, maxima->len - 1);
+    return maxima;
 }
